@@ -1,0 +1,7 @@
+SISTEMA VETERINARIO
+PRUEBA DE GITHUB DESKTOP
+Rol: Backend
+Responsabilidad inicial: Administrar el repositorio e integrar los cambios del equipo.
+Rama: backend
+Estado: Prueba realizada correctamente.
+Alumno: Sebastian Calderon Avalos

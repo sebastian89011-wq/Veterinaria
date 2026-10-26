@@ -1,0 +1,8 @@
+SISTEMA VETERINARIO
+PRUEBA DE GITHUB DESKTOP
+Rol simulado: Frontend
+Responsabilidad inicial: Desarrollar la futura interfaz del Sistema Veterinario.
+Rama: frontend
+Estado: Simulación realizada correctamente.
+Integrante asignado: Leonel Cajeme Garcia
+Ejecutado por: Sebastian Calderon Avalos (@sebastian89011-wq).

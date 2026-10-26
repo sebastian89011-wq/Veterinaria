@@ -1,8 +1,12 @@
 SISTEMA VETERINARIO
 PRUEBA DE GITHUB DESKTOP
-Rol simulado: DBA
-Responsabilidad inicial: Administrar la futura base de datos del Sistema Veterinario.
-Rama: dba
-Estado: Simulación realizada correctamente.
-Integrante asignado: Oscar Crespo Sanchez
-Ejecutado por: Sebastian Calderon Avalos (@sebastian89011-wq).
+Rol: DBA
+Responsabilidad inicial:
+Administrar la futura base de datos
+del Sistema Veterinario.
+Rama:
+dba
+Estado:
+Prueba realizada correctamente.
+Alumno:
+Leonel Cajeme Garcia

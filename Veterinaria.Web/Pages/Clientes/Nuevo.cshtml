@@ -1,0 +1,65 @@
+﻿@page
+@model Veterinaria.Web.Pages.Clientes.NuevoModel
+@{
+    ViewData["Title"] = "Nuevo Cliente";
+}
+
+<div class="container py-4">
+    <h1>Nuevo Cliente</h1>
+
+    <form method="post" class="row g-3">
+        <div asp-validation-summary="ModelOnly"
+             class="text-danger"></div>
+
+        <div class="col-md-6">
+            <label asp-for="Cliente.Nombre" class="form-label"></label>
+            <input asp-for="Cliente.Nombre" class="form-control" />
+            <span asp-validation-for="Cliente.Nombre"
+                  class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="Cliente.ApellidoPaterno"
+                   class="form-label">Apellido paterno</label>
+            <input asp-for="Cliente.ApellidoPaterno" class="form-control" />
+            <span asp-validation-for="Cliente.ApellidoPaterno"
+                  class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="Cliente.ApellidoMaterno"
+                   class="form-label">Apellido materno</label>
+            <input asp-for="Cliente.ApellidoMaterno" class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="Cliente.Telefono"
+                   class="form-label">Teléfono</label>
+            <input asp-for="Cliente.Telefono" class="form-control" />
+            <span asp-validation-for="Cliente.Telefono"
+                  class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="Cliente.Correo" class="form-label"></label>
+            <input asp-for="Cliente.Correo" class="form-control" />
+            <span asp-validation-for="Cliente.Correo"
+                  class="text-danger"></span>
+        </div>
+
+        <div class="col-12">
+            <label asp-for="Cliente.Direccion"
+                   class="form-label">Dirección</label>
+            <input asp-for="Cliente.Direccion" class="form-control" />
+        </div>
+
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a asp-page="./Index" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,36 @@
+﻿@page "{id:int}"
+@model Veterinaria.Web.Pages.Mascotas.DetalleModel
+@{
+    ViewData["Title"] = "Detalle de Mascota";
+}
+
+<div class="container py-4">
+    <h1>Detalle de Mascota</h1>
+
+    <dl class="row">
+        <dt class="col-sm-3">Nombre</dt>
+        <dd class="col-sm-9">@Model.Mascota.Nombre</dd>
+
+        <dt class="col-sm-3">Propietario</dt>
+        <dd class="col-sm-9">@Model.Propietario</dd>
+
+        <dt class="col-sm-3">Especie</dt>
+        <dd class="col-sm-9">@Model.Mascota.Especie</dd>
+
+        <dt class="col-sm-3">Raza</dt>
+        <dd class="col-sm-9">@Model.Mascota.Raza</dd>
+
+        <dt class="col-sm-3">Sexo</dt>
+        <dd class="col-sm-9">@Model.Mascota.Sexo</dd>
+    </dl>
+
+    <a asp-page="./Editar"
+       asp-route-id="@Model.Mascota.IdMascota"
+       class="btn btn-primary">
+        Editar
+    </a>
+
+    <a asp-page="./Index" class="btn btn-secondary">
+        Regresar
+    </a>
+</div>

@@ -50,4 +50,26 @@ public class MascotaNegocio
             throw new ArgumentException(
                 "La especie es obligatoria.");
     }
+
+    public bool Eliminar(int idMascota)
+    {
+        if (idMascota <= 0)
+            throw new ArgumentException(
+                "Mascota no válida.");
+
+        Mascota? mascota =
+            _datos.BuscarPorId(idMascota);
+
+        if (mascota is null)
+            return false;
+
+        if (_datos.TieneConsultas(idMascota))
+        {
+            throw new ReglaNegocioException(
+                "No se puede eliminar la mascota " +
+                "porque tiene consultas registradas.");
+        }
+
+        return _datos.Eliminar(idMascota);
+    }
 }

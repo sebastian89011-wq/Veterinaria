@@ -179,4 +179,47 @@ public class MascotaDatos
                     : Convert.ToString(dr["senas_particulares"])
         };
     }
+
+    public bool TieneConsultas(int idMascota)
+    {
+        using MySqlConnection cn = Conexion.Crear();
+        cn.Open();
+
+        const string sql = """
+        SELECT COUNT(*)
+        FROM consulta
+        WHERE id_mascota = @idMascota;
+        """;
+
+        using MySqlCommand cmd = new(sql, cn);
+
+        cmd.Parameters.AddWithValue(
+            "@idMascota",
+            idMascota);
+
+        int total =
+            Convert.ToInt32(
+                cmd.ExecuteScalar());
+
+        return total > 0;
+    }
+
+    public bool Eliminar(int idMascota)
+    {
+        using MySqlConnection cn = Conexion.Crear();
+        cn.Open();
+
+        const string sql = """
+        DELETE FROM mascota
+        WHERE id_mascota = @idMascota;
+        """;
+
+        using MySqlCommand cmd = new(sql, cn);
+
+        cmd.Parameters.AddWithValue(
+            "@idMascota",
+            idMascota);
+
+        return cmd.ExecuteNonQuery() > 0;
+    }
 }

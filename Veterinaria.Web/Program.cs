@@ -1,37 +1,23 @@
 using Veterinaria.Negocios;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder =
+    WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorPages();
 
 string? cadena =
-    builder.Configuration.GetConnectionString("Veterinaria");
+    builder.Configuration
+        .GetConnectionString("Veterinaria");
 
 if (!string.IsNullOrWhiteSpace(cadena))
 {
     ConfiguracionNegocio.Inicializar(cadena);
-
-    if (builder.Environment.IsDevelopment())
-    {
-        try
-        {
-            int total = ConfiguracionNegocio.ProbarConexion();
-
-            Console.WriteLine(
-                $"MYSQL OK. Clientes registrados: {total}");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(
-                $"MYSQL ERROR: {ex.Message}");
-        }
-    }
 }
-else if (builder.Environment.IsDevelopment())
+else
 {
-    Console.WriteLine(
-        "MYSQL AVISO: no se encontró ConnectionStrings:Veterinaria. " +
-        "Configure User Secrets antes de probar la conexión.");
+    System.Diagnostics.Debug.WriteLine(
+        "No se encontró ConnectionStrings:Veterinaria. " +
+        "Revise User Secrets.");
 }
 
 var app = builder.Build();

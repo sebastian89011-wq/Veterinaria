@@ -131,6 +131,49 @@ public class ClienteDatos
         return cmd.ExecuteNonQuery() > 0;
     }
 
+    public bool Eliminar(int idCliente)
+    {
+        using MySqlConnection cn = Conexion.Crear();
+        cn.Open();
+
+        const string sql = """
+        DELETE FROM cliente
+        WHERE id_cliente = @idCliente;
+        """;
+
+        using MySqlCommand cmd = new(sql, cn);
+
+        cmd.Parameters.AddWithValue(
+            "@idCliente",
+            idCliente);
+
+        return cmd.ExecuteNonQuery() > 0;
+    }
+
+    public bool TieneMascotas(int idCliente)
+    {
+        using MySqlConnection cn = Conexion.Crear();
+        cn.Open();
+
+        const string sql = """
+        SELECT COUNT(*)
+        FROM mascota
+        WHERE id_cliente = @idCliente;
+        """;
+
+        using MySqlCommand cmd = new(sql, cn);
+
+        cmd.Parameters.AddWithValue(
+            "@idCliente",
+            idCliente);
+
+        int total =
+            Convert.ToInt32(
+                cmd.ExecuteScalar());
+
+        return total > 0;
+    }
+
     private static void AgregarParametros(
         MySqlCommand cmd,
         Cliente cliente)

@@ -48,4 +48,26 @@ public class ClienteNegocio
         if (string.IsNullOrWhiteSpace(cliente.Telefono))
             throw new ArgumentException("El teléfono es obligatorio.");
     }
+
+    public bool Eliminar(int idCliente)
+    {
+        if (idCliente <= 0)
+            throw new ArgumentException(
+                "Cliente no válido.");
+
+        Cliente? cliente =
+            _datos.BuscarPorId(idCliente);
+
+        if (cliente is null)
+            return false;
+
+        if (_datos.TieneMascotas(idCliente))
+        {
+            throw new ReglaNegocioException(
+                "No se puede eliminar el cliente " +
+                "porque tiene mascotas registradas.");
+        }
+
+        return _datos.Eliminar(idCliente);
+    }
 }

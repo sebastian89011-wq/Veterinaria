@@ -1,36 +1,90 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Inicio";
 }
 
-<div class="container py-4">
-    <h1>Centro Veterinario Karely Ruiz</h1>
-    <p class="text-muted">Panel principal del sistema.</p>
+<div class="container">
 
-    <div class="row g-3 mt-2">
-        <div class="col-md-6 col-lg-3">
-            <div class="card h-100 shadow-sm">
-                <div class="card-body">
+    <section class="ume-hero">
+        <!-- Círculo mágico decorativo -->
+        <svg class="ume-circle" viewBox="0 0 400 400" fill="none" stroke="#d9b45a" aria-hidden="true">
+            <circle cx="200" cy="200" r="192" stroke-width="2" />
+            <circle cx="200" cy="200" r="182" stroke-width="1" stroke-dasharray="2 7" />
+            <circle cx="200" cy="200" r="130" stroke-width="1.5" />
+            <polygon points="200,30 347.2,285 52.8,285" stroke-width="1.5" />
+            <polygon points="200,370 52.8,115 347.2,115" stroke-width="1.5" />
+            <circle cx="200" cy="200" r="60" stroke-width="1" />
+            <circle cx="200" cy="200" r="6" fill="#d9b45a" />
+        </svg>
+
+        <div class="ume-hero-text">
+            <div class="ume-kicker">✦ Gabinete del Centro Veterinario ✦</div>
+            <h1 class="ume-title mt-2">Centro Veterinario<br />Karely Ruiz</h1>
+            <p class="ume-sub">Donde el cielo es de oro y ninguna criatura queda sin cuidado.</p>
+        </div>
+    </section>
+
+    <div class="row g-4 mt-1">
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-body p-4">
+                    <span class="ume-chip azul">Propietarios</span>
                     <h5 class="card-title">Clientes</h5>
-                    <p class="card-text">Administración de propietarios.</p>
-                    <a asp-page="/Clientes/Index" class="btn btn-primary">
-                        Abrir
-                    </a>
+                    <p class="card-text">Registro y administración de las personas que confían en nosotros a sus compañeros.</p>
+                    <a asp-page="/Clientes/Index" class="btn btn-primary">Abrir</a>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-6 col-lg-3">
-            <div class="card h-100 shadow-sm">
-                <div class="card-body">
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-body p-4">
+                    <span class="ume-chip roja">Pacientes</span>
                     <h5 class="card-title">Mascotas</h5>
-                    <p class="card-text">Registro de mascotas.</p>
-                    <a asp-page="/Mascotas/Index" class="btn btn-primary">
-                        Abrir
-                    </a>
+                    <p class="card-text">Registro de mascotas, con su propietario, especie, raza y datos de salud.</p>
+                    <a asp-page="/Mascotas/Index" class="btn btn-primary">Abrir</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 ume-sealed">
+                <div class="card-body p-4">
+                    <span class="ume-chip oro">Sellado</span>
+                    <h5 class="card-title">Veterinarios</h5>
+                    <p class="card-text">El personal médico. Este sello se romperá en una versión posterior.</p>
+                    <a asp-page="/Veterinarios/Index" class="btn btn-outline-secondary btn-sm">Ver</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 ume-sealed">
+                <div class="card-body p-4">
+                    <span class="ume-chip oro">Sellado</span>
+                    <h5 class="card-title">Consultas</h5>
+                    <p class="card-text">Historial de atenciones. Módulo en preparación.</p>
+                    <a asp-page="/Consultas/Index" class="btn btn-outline-secondary btn-sm">Ver</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 ume-sealed">
+                <div class="card-body p-4">
+                    <span class="ume-chip oro">Sellado</span>
+                    <h5 class="card-title">Recetas</h5>
+                    <p class="card-text">Prescripciones y medicamentos. Módulo en preparación.</p>
+                    <a asp-page="/Recetas/Index" class="btn btn-outline-secondary btn-sm">Ver</a>
                 </div>
             </div>
         </div>
     </div>
+
+    <blockquote class="ume-truth mt-5">
+        <p><span class="ume-red">Verdad roja:</span> todo paciente registrado en este sistema será atendido con el mismo cuidado.</p>
+        <p><span class="ume-blue">Verdad azul:</span> cada registro que guardas queda escrito en la base de datos MySQL.</p>
+    </blockquote>
+
 </div>

@@ -13,6 +13,12 @@
     <div class="d-flex justify-content-between align-items-center mb-3">
         <div>
             <h1>Mascotas</h1>
+            @if (!string.IsNullOrWhiteSpace(Model.Error))
+            {
+                <div class="alert alert-danger">
+                    @Model.Error
+                </div>
+            }
             <p class="text-muted mb-0">Mascotas registradas.</p>
         </div>
 
@@ -50,6 +56,11 @@
                             <a asp-page="./Editar"
                                asp-route-id="@item.Mascota.IdMascota"
                                class="btn btn-sm btn-outline-secondary">Editar</a>
+                            <a asp-page="./Eliminar"
+                               asp-route-id="@item.Mascota.IdMascota"
+                               class="btn btn-sm btn-outline-danger">
+                                Eliminar
+                            </a>
                         </td>
                     </tr>
                 }

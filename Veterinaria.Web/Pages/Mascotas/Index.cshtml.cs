@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Veterinaria.Entidades;
+using Veterinaria.Negocios;
 
 namespace Veterinaria.Web.Pages.Mascotas;
 
@@ -11,62 +12,54 @@ public class IndexModel : PageModel
 
     public List<MascotaFila> Mascotas { get; private set; } = new();
 
+    public string? Error { get; private set; }
+
     public void OnGet()
     {
-        Mascotas = new List<MascotaFila>
+        try
         {
-            new()
-            {
-                Mascota = new Mascota
-                {
-                    IdMascota = 1,
-                    IdCliente = 1,
-                    Nombre = "Max",
-                    Especie = "Perro",
-                    Raza = "Labrador",
-                    Sexo = "Macho"
-                },
-                Propietario = "Ana López"
-            },
-            new()
-            {
-                Mascota = new Mascota
-                {
-                    IdMascota = 2,
-                    IdCliente = 1,
-                    Nombre = "Luna",
-                    Especie = "Gato",
-                    Raza = "Siamés",
-                    Sexo = "Hembra"
-                },
-                Propietario = "Ana López"
-            },
-            new()
-            {
-                Mascota = new Mascota
-                {
-                    IdMascota = 3,
-                    IdCliente = 2,
-                    Nombre = "Rocky",
-                    Especie = "Perro",
-                    Raza = "Pastor Alemán",
-                    Sexo = "Macho"
-                },
-                Propietario = "Carlos Ramírez"
-            }
-        };
+            MascotaNegocio mascotaNegocio = new();
+            ClienteNegocio clienteNegocio = new();
 
-        if (IdCliente.HasValue)
-        {
-            Mascotas = Mascotas
-                .Where(m => m.Mascota.IdCliente == IdCliente.Value)
+            List<Mascota> mascotas =
+                IdCliente.HasValue
+                    ? mascotaNegocio.ListarPorCliente(IdCliente.Value)
+                    : mascotaNegocio.Listar();
+
+            Dictionary<int, Cliente> clientes =
+                clienteNegocio
+                    .Listar()
+                    // IdCliente es PK; no existen duplicados.
+                    .ToDictionary(c => c.IdCliente);
+
+            Mascotas = mascotas
+                .Select(m => new MascotaFila
+                {
+                    Mascota = m,
+                    Propietario =
+                        clientes.TryGetValue(
+                            m.IdCliente,
+                            out Cliente? cliente)
+                        ? $"{cliente.Nombre} " +
+                          $"{cliente.ApellidoPaterno}"
+                        : "No disponible"
+                })
                 .ToList();
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine(ex);
+
+            Error =
+                "No fue posible consultar las mascotas.";
         }
     }
 
     public class MascotaFila
     {
         public Mascota Mascota { get; set; } = new();
-        public string Propietario { get; set; } = string.Empty;
+
+        public string Propietario { get; set; } =
+            string.Empty;
     }
 }

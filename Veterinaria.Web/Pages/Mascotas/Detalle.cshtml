@@ -12,7 +12,11 @@
         <dd class="col-sm-9">@Model.Mascota.Nombre</dd>
 
         <dt class="col-sm-3">Propietario</dt>
-        <dd class="col-sm-9">@Model.Propietario</dd>
+        <dd class="col-sm-9">
+            @Model.Propietario.Nombre
+            @Model.Propietario.ApellidoPaterno
+            @Model.Propietario.ApellidoMaterno
+        </dd>
 
         <dt class="col-sm-3">Especie</dt>
         <dd class="col-sm-9">@Model.Mascota.Especie</dd>

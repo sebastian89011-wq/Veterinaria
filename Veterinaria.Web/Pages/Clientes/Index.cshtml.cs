@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Veterinaria.Entidades;
+using Veterinaria.Negocios;
 
 namespace Veterinaria.Web.Pages.Clientes;
 
@@ -11,43 +12,25 @@ public class IndexModel : PageModel
 
     public List<Cliente> Clientes { get; private set; } = new();
 
+    public string? Error { get; private set; }
+
     public void OnGet()
     {
-        Clientes = new List<Cliente>
+        try
         {
-            new()
-            {
-                IdCliente = 1,
-                Nombre = "Ana",
-                ApellidoPaterno = "López",
-                ApellidoMaterno = "García",
-                Telefono = "6461234567",
-                Correo = "ana@correo.com",
-                Direccion = "Ensenada"
-            },
-            new()
-            {
-                IdCliente = 2,
-                Nombre = "Carlos",
-                ApellidoPaterno = "Ramírez",
-                ApellidoMaterno = "Torres",
-                Telefono = "6467654321",
-                Correo = "carlos@correo.com",
-                Direccion = "Ensenada"
-            }
-        };
+            ClienteNegocio negocio = new();
 
-        if (!string.IsNullOrWhiteSpace(Buscar))
+            Clientes = string.IsNullOrWhiteSpace(Buscar)
+                ? negocio.Listar()
+                : negocio.Buscar(Buscar);
+        }
+        catch (Exception ex)
         {
-            string texto = Buscar.Trim();
+            System.Diagnostics.Debug.WriteLine(ex);
 
-            Clientes = Clientes
-                .Where(c =>
-                    c.Nombre.Contains(texto, StringComparison.OrdinalIgnoreCase) ||
-                    c.ApellidoPaterno.Contains(texto, StringComparison.OrdinalIgnoreCase) ||
-                    (c.Correo?.Contains(texto, StringComparison.OrdinalIgnoreCase) ?? false) ||
-                    c.Telefono.Contains(texto, StringComparison.OrdinalIgnoreCase))
-                .ToList();
+            Error =
+                "No fue posible consultar los clientes. " +
+                "Verifique la conexión con MySQL.";
         }
     }
 }

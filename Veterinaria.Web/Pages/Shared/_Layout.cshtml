@@ -1,69 +1,123 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="es" data-bs-theme="dark">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Veterinaria.Web</title>
-    <script type="importmap"></script>
+    <title>@ViewData["Title"] · Centro Veterinario Karely Ruiz</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦋</text></svg>" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Veterinaria.Web.styles.css" asp-append-version="true" />
 </head>
+@{
+    var pagina = ViewContext.RouteData.Values["page"]?.ToString() ?? "";
+    string Activo(string prefijo) =>
+        pagina.StartsWith(prefijo, StringComparison.OrdinalIgnoreCase) ? "active" : "";
+
+    // Mariposas doradas de fondo: posición, tamaño, duración, retraso y dirección
+    var mariposas = new[]
+    {
+        new { L = "6%",  T = "72%", Size = 34, Dur = 34, Delay = 0,  Dir = 1 },
+        new { L = "82%", T = "20%", Size = 26, Dur = 41, Delay = -8, Dir = -1 },
+        new { L = "48%", T = "84%", Size = 40, Dur = 47, Delay = -15, Dir = 1 },
+        new { L = "20%", T = "18%", Size = 22, Dur = 38, Delay = -22, Dir = 1 },
+        new { L = "90%", T = "66%", Size = 30, Dur = 44, Delay = -5, Dir = -1 },
+        new { L = "62%", T = "40%", Size = 18, Dur = 52, Delay = -30, Dir = -1 },
+        new { L = "34%", T = "58%", Size = 24, Dur = 36, Delay = -12, Dir = 1 }
+    };
+}
 <body>
+    <!-- Degradado dorado reutilizable por todas las mariposas -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+        <defs>
+            <linearGradient id="umeGold" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#fff0bf" />
+                <stop offset=".55" stop-color="#e6c36a" />
+                <stop offset="1" stop-color="#a77c24" />
+            </linearGradient>
+        </defs>
+    </svg>
+
+    <div class="ume-butterflies" aria-hidden="true">
+        @foreach (var b in mariposas)
+        {
+            <span class="ume-bf" style="left:@b.L;top:@b.T;--sz:@(b.Size)px;--dur:@(b.Dur)s;--delay:@(b.Delay)s;--dir:@b.Dir">
+                <svg viewBox="0 0 100 100">
+                    <g class="ume-wing-l" fill="url(#umeGold)" stroke="#8a6a22" stroke-width="1">
+                        <path d="M50 50 C30 10 2 12 8 42 C10 56 34 62 50 52 Z" />
+                        <path d="M50 52 C36 62 14 70 22 88 C30 96 46 78 50 56 Z" />
+                    </g>
+                    <g class="ume-wing-r" fill="url(#umeGold)" stroke="#8a6a22" stroke-width="1">
+                        <path d="M50 50 C70 10 98 12 92 42 C90 56 66 62 50 52 Z" />
+                        <path d="M50 52 C64 62 86 70 78 88 C70 96 54 78 50 56 Z" />
+                    </g>
+                    <ellipse cx="50" cy="52" rx="2.4" ry="14" fill="#3b2a0c" />
+                    <path d="M49 38 C46 30 42 26 38 24 M51 38 C54 30 58 26 62 24" stroke="#8a6a22" stroke-width="1.2" fill="none" />
+                </svg>
+            </span>
+        }
+    </div>
+
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-lg navbar-dark ume-nav sticky-top">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">Veterinaria.Web</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand" asp-area="" asp-page="/Index">
+                    <svg viewBox="0 0 100 100" aria-hidden="true">
+                        <g fill="url(#umeGold)" stroke="#8a6a22" stroke-width="2">
+                            <path d="M50 50 C30 10 2 12 8 42 C10 56 34 62 50 52 Z" />
+                            <path d="M50 52 C36 62 14 70 22 88 C30 96 46 78 50 56 Z" />
+                            <path d="M50 50 C70 10 98 12 92 42 C90 56 66 62 50 52 Z" />
+                            <path d="M50 52 C64 62 86 70 78 88 C70 96 54 78 50 56 Z" />
+                        </g>
+                        <ellipse cx="50" cy="52" rx="2.6" ry="14" fill="#3b2a0c" />
+                    </svg>
+                    Karely Ruiz
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal"
+                        aria-controls="menuPrincipal" aria-expanded="false" aria-label="Alternar navegación">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                <div class="collapse navbar-collapse" id="menuPrincipal">
+                    <ul class="navbar-nav flex-grow-1 justify-content-end gap-lg-2">
                         <li class="nav-item">
-                            <a class="nav-link" asp-page="/Index">Inicio</a>
+                            <a class="nav-link @(pagina == "/Index" ? "active" : "")" asp-page="/Index">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-page="/Clientes/Index">Clientes</a>
+                            <a class="nav-link @Activo("/Clientes")" asp-page="/Clientes/Index">Clientes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-page="/Mascotas/Index">Mascotas</a>
+                            <a class="nav-link @Activo("/Mascotas")" asp-page="/Mascotas/Index">Mascotas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-page="/Veterinarios/Index">Veterinarios</a>
+                            <a class="nav-link @Activo("/Veterinarios")" asp-page="/Veterinarios/Index">Veterinarios</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-page="/Consultas/Index">Consultas</a>
+                            <a class="nav-link @Activo("/Consultas")" asp-page="/Consultas/Index">Consultas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-page="/Recetas/Index">Recetas</a>
+                            <a class="nav-link @Activo("/Recetas")" asp-page="/Recetas/Index">Recetas</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - Veterinaria.Web - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>
+    <main role="main" class="ume-main">
+        @RenderBody()
+    </main>
+
+    <footer class="ume-footer">
+        <div class="ume-font">✦ Centro Veterinario Karely Ruiz ✦</div>
+        <div>Sistema Veterinario · Ambientes de Programación Visual · UABC</div>
+        <div>Tema visual inspirado en <em>Umineko no Naku Koro ni</em> (07th Expansion). Proyecto académico sin fines de lucro.</div>
     </footer>
-
-
-
-
-
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

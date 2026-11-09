@@ -23,6 +23,47 @@
 
         <dt class="col-sm-3">Dirección</dt>
         <dd class="col-sm-9">@Model.Cliente.Direccion</dd>
+
+        <h2 class="h4 mt-4">Mascotas</h2>
+
+        @if (Model.Mascotas.Count == 0)
+        {
+            <div class="alert alert-info">
+                Este cliente todavía no tiene mascotas registradas.
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Especie</th>
+                            <th>Raza</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var mascota in Model.Mascotas)
+                        {
+                            <tr>
+                                <td>@mascota.Nombre</td>
+                                <td>@mascota.Especie</td>
+                                <td>@mascota.Raza</td>
+                                <td>
+                                    <a asp-page="/Mascotas/Detalle"
+                                       asp-route-id="@mascota.IdMascota"
+                                       class="btn btn-sm btn-outline-primary">
+                                        Ver
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
     </dl>
 
     <a asp-page="/Mascotas/Index"

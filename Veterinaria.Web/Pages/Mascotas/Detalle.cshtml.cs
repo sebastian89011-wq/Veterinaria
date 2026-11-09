@@ -1,58 +1,53 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Veterinaria.Entidades;
+using Veterinaria.Negocios;
 
 namespace Veterinaria.Web.Pages.Mascotas;
 
 public class DetalleModel : PageModel
 {
     public Mascota Mascota { get; private set; } = new();
-    public string Propietario { get; private set; } = string.Empty;
+
+    public Cliente Propietario { get; private set; } = new();
+
+    public string? Error { get; private set; }
 
     public IActionResult OnGet(int id)
     {
-        switch (id)
+        try
         {
-            case 1:
-                Mascota = new Mascota
-                {
-                    IdMascota = 1,
-                    IdCliente = 1,
-                    Nombre = "Max",
-                    Especie = "Perro",
-                    Raza = "Labrador",
-                    Sexo = "Macho"
-                };
-                Propietario = "Ana López";
-                break;
+            MascotaNegocio mascotaNegocio = new();
 
-            case 2:
-                Mascota = new Mascota
-                {
-                    IdMascota = 2,
-                    IdCliente = 1,
-                    Nombre = "Luna",
-                    Especie = "Gato",
-                    Raza = "Siamés",
-                    Sexo = "Hembra"
-                };
-                Propietario = "Ana López";
-                break;
+            Mascota? mascota =
+                mascotaNegocio.BuscarPorId(id);
 
-            case 3:
-                Mascota = new Mascota
-                {
-                    IdMascota = 3,
-                    IdCliente = 2,
-                    Nombre = "Rocky",
-                    Especie = "Perro",
-                    Raza = "Pastor Alemán",
-                    Sexo = "Macho"
-                };
-                Propietario = "Carlos Ramírez";
-                break;
+            if (mascota is null)
+                return NotFound();
+
+            Mascota = mascota;
+
+            ClienteNegocio clienteNegocio = new();
+
+            Cliente? propietario =
+                clienteNegocio.BuscarPorId(
+                    mascota.IdCliente);
+
+            if (propietario is null)
+                return NotFound();
+
+            Propietario = propietario;
+
+            return Page();
         }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine(ex);
 
-        return Mascota.IdMascota == 0 ? NotFound() : Page();
+            Error =
+                "No fue posible consultar el detalle de la mascota.";
+
+            return Page();
+        }
     }
 }

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Veterinaria.Entidades;
+using Veterinaria.Negocios;
 
 namespace Veterinaria.Web.Pages.Clientes;
 
@@ -8,33 +9,42 @@ public class DetalleModel : PageModel
 {
     public Cliente Cliente { get; private set; } = new();
 
+    public List<Mascota> Mascotas { get; private set; } = new();
+
+    public string? Error { get; private set; }
+
     public IActionResult OnGet(int id)
     {
-        Cliente = id switch
-        {
-            1 => new Cliente
-            {
-                IdCliente = 1,
-                Nombre = "Ana",
-                ApellidoPaterno = "López",
-                ApellidoMaterno = "García",
-                Telefono = "6461234567",
-                Correo = "ana@correo.com",
-                Direccion = "Ensenada"
-            },
-            2 => new Cliente
-            {
-                IdCliente = 2,
-                Nombre = "Carlos",
-                ApellidoPaterno = "Ramírez",
-                ApellidoMaterno = "Torres",
-                Telefono = "6467654321",
-                Correo = "carlos@correo.com",
-                Direccion = "Ensenada"
-            },
-            _ => new Cliente()
-        };
+        if (id <= 0)
+            return NotFound();
 
-        return Cliente.IdCliente == 0 ? NotFound() : Page();
+        try
+        {
+            ClienteNegocio clienteNegocio = new();
+
+            Cliente? cliente =
+                clienteNegocio.BuscarPorId(id);
+
+            if (cliente is null)
+                return NotFound();
+
+            Cliente = cliente;
+
+            MascotaNegocio mascotaNegocio = new();
+
+            Mascotas =
+                mascotaNegocio.ListarPorCliente(id);
+
+            return Page();
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine(ex);
+
+            Error =
+                "No fue posible consultar el detalle del cliente.";
+
+            return Page();
+        }
     }
 }

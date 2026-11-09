@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Veterinaria.Entidades;
+using Veterinaria.Negocios;
 
 namespace Veterinaria.Web.Pages.Clientes;
 
@@ -18,13 +19,34 @@ public class NuevoModel : PageModel
         if (!ModelState.IsValid)
             return Page();
 
-        // PRÁCTICA 6:
-        // ClienteNegocio negocio = new();
-        // negocio.Agregar(Cliente);
+        try
+        {
+            ClienteNegocio negocio = new();
 
-        TempData["Mensaje"] =
-            "Formulario validado. La persistencia se conectará en la Práctica 6.";
+            int id = negocio.Agregar(Cliente);
 
-        return RedirectToPage("./Index");
+            TempData["Mensaje"] =
+                $"Cliente registrado correctamente. ID: {id}";
+
+            return RedirectToPage("./Index");
+        }
+        catch (ArgumentException ex)
+        {
+            ModelState.AddModelError(
+                string.Empty,
+                ex.Message);
+
+            return Page();
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine(ex);
+
+            ModelState.AddModelError(
+                string.Empty,
+                "No fue posible registrar el cliente.");
+
+            return Page();
+        }
     }
 }

@@ -1,0 +1,64 @@
+﻿@page "{id:int}"
+@model Veterinaria.Web.Pages.Mascotas.EliminarModel
+@{
+    ViewData["Title"] = "Eliminar Mascota";
+}
+
+<div class="container py-4">
+    <h1>Eliminar Mascota</h1>
+
+    @if (!string.IsNullOrWhiteSpace(Model.Error))
+    {
+        <div class="alert alert-danger mt-4">
+            @Model.Error
+        </div>
+
+        <a asp-page="./Index" class="btn btn-secondary">
+            Regresar
+        </a>
+    }
+    else
+    {
+        <div class="alert alert-warning mt-4">
+            ¿Desea eliminar a
+            <strong>@Model.Mascota.Nombre</strong>?
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-body p-4">
+                <span class="ume-chip roja">Se borrará para siempre</span>
+                <h5 class="card-title">@Model.Mascota.Nombre</h5>
+                <dl class="row mb-0">
+                    <dt class="col-sm-3">Propietario</dt>
+                    <dd class="col-sm-9">
+                        <strong>
+                            @Model.Propietario.Nombre
+                            @Model.Propietario.ApellidoPaterno
+                        </strong>
+                    </dd>
+
+                    <dt class="col-sm-3">Especie</dt>
+                    <dd class="col-sm-9">@Model.Mascota.Especie</dd>
+
+                    <dt class="col-sm-3">Raza</dt>
+                    <dd class="col-sm-9 mb-0">@Model.Mascota.Raza</dd>
+                </dl>
+            </div>
+        </div>
+
+        <p class="ume-truth">
+            <span class="ume-red">Verdad roja:</span>
+            esta acción no se puede deshacer.
+        </p>
+
+        <form method="post" class="mt-4">
+            <button type="submit" class="btn btn-danger">
+                Eliminar
+            </button>
+
+            <a asp-page="./Index" class="btn btn-secondary">
+                Cancelar
+            </a>
+        </form>
+    }
+</div>

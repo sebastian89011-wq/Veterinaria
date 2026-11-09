@@ -56,6 +56,11 @@
                             <a asp-page="./Editar"
                                asp-route-id="@item.Mascota.IdMascota"
                                class="btn btn-sm btn-outline-secondary">Editar</a>
+                            <a asp-page="./Eliminar"
+                               asp-route-id="@item.Mascota.IdMascota"
+                               class="btn btn-sm btn-outline-danger">
+                                Eliminar
+                            </a>
                         </td>
                     </tr>
                 }

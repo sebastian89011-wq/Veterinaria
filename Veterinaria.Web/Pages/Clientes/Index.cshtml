@@ -76,6 +76,12 @@
                             <a asp-page="/Mascotas/Index"
                                asp-route-idCliente="@cliente.IdCliente"
                                class="btn btn-sm btn-outline-success">Mascotas</a>
+                            
+                            <a asp-page="./Eliminar"
+                               asp-route-id="@cliente.IdCliente"
+                               class="btn btn-sm btn-outline-danger">
+                                Eliminar
+                            </a>
                         </td>
                     </tr>
                 }

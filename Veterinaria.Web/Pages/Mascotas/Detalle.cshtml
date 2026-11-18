@@ -26,6 +26,20 @@
 
         <dt class="col-sm-3">Sexo</dt>
         <dd class="col-sm-9">@Model.Mascota.Sexo</dd>
+
+        <dt class="col-sm-3">Fecha de nacimiento</dt>
+        <dd class="col-sm-9">
+            @(Model.Mascota.FechaNacimiento.HasValue
+                ? Model.Mascota.FechaNacimiento.Value.ToString("dd/MM/yyyy")
+                : "No registrada")
+        </dd>
+
+        <dt class="col-sm-3">Color</dt>
+        <dd class="col-sm-9">
+            @(string.IsNullOrWhiteSpace(Model.Mascota.Color)
+                ? "No registrado"
+                : Model.Mascota.Color)
+        </dd>
     </dl>
 
     <a asp-page="./Editar"

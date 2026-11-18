@@ -63,9 +63,14 @@
         <div class="col-md-6">
             <label asp-for="Mascota.FechaNacimiento"
                    class="form-label">Fecha de nacimiento</label>
+
             <input asp-for="Mascota.FechaNacimiento"
                    type="date"
+                   max="@DateTime.Today.ToString("yyyy-MM-dd")"
                    class="form-control" />
+
+            <span asp-validation-for="Mascota.FechaNacimiento"
+                  class="text-danger"></span>
         </div>
 
         <div class="col-md-6">

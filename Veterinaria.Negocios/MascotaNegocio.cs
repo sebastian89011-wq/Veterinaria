@@ -46,6 +46,13 @@ public class MascotaNegocio
             throw new ArgumentException(
                 "El nombre de la mascota es obligatorio.");
 
+        if (mascota.FechaNacimiento.HasValue &&
+            mascota.FechaNacimiento.Value.Date > DateTime.Today)
+            {
+                throw new ArgumentException(
+                    "La fecha de nacimiento no puede ser futura.");
+            }
+
         if (string.IsNullOrWhiteSpace(mascota.Especie))
             throw new ArgumentException(
                 "La especie es obligatoria.");
